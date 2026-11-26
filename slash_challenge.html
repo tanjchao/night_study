@@ -1,0 +1,106 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>陋室銘｜古文斬錯字 V1.1</title>
+<style>
+:root{--ink:#30271d;--paper:#fffaf1;--bg:#eee5d8}*{box-sizing:border-box}body{margin:0;background:linear-gradient(140deg,#eae0d3,#fcf7ef);color:var(--ink);font-family:"Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif}button{font:inherit;cursor:pointer}.shell{max-width:1000px;margin:auto;padding:12px}header{text-align:center}h1{margin:8px;font-size:clamp(24px,4vw,32px)}.sub{font-size:13px;color:#6f6558}.actions{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0}.btn{padding:9px 13px;border:1px solid #a98569;background:#fffaf1;border-radius:11px;color:#553824;font-weight:bold}.primary{background:#795037;color:white}.game{border:2px solid #a58b73;border-radius:15px;overflow:hidden;box-shadow:0 8px 18px #40260e24}.hud{display:flex;justify-content:space-between;background:#243b4d;color:#fff0d3;padding:10px;font-size:13px;gap:8px}.arena{position:relative;height:clamp(300px,48vw,420px);background:radial-gradient(ellipse,#3b5a73,#162b3c);overflow:hidden;touch-action:none;user-select:none;cursor:crosshair}.arena:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(100deg,transparent 0 55px,#d4e5ef0f 55px 57px);pointer-events:none}.jump{position:absolute;top:0;left:0;padding:13px 15px;border:2px solid #b59365;border-radius:12px;background:#f8e5b9;color:#27221e;white-space:nowrap;font-weight:800;font-size:clamp(14px,2.3vw,21px);box-shadow:0 6px 18px #0005;pointer-events:none;will-change:transform}canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:20}.floatmsg{position:absolute;top:22%;left:50%;transform:translateX(-50%);color:#ffe8af;font-size:22px;font-weight:900;text-shadow:0 2px 10px #112;pointer-events:none;z-index:22;white-space:nowrap}.ruleBanner{padding:12px 10px;text-align:center;background:#fff2d7;color:#56301d;font-weight:900;font-size:clamp(15px,3vw,21px);border-bottom:2px solid #c8a47d}.ruleBanner .ruleLine{display:block}.ruleBanner .count{font-size:13px;display:block;margin-top:4px;color:#794c31}.ruleBanner.reading{background:#ffe2a2;animation:ruleBlink .65s ease-in-out infinite alternate}@keyframes ruleBlink{from{box-shadow:inset 0 0 0 0 #ffe2a2;filter:brightness(1)}to{box-shadow:inset 0 0 0 4px #ecac49;filter:brightness(1.12)}}@media(prefers-reduced-motion:reduce){.ruleBanner.reading{animation:none}}.help{position:absolute;top:47%;left:5%;width:90%;text-align:center;color:#f2e4c6bb;font-size:14px;pointer-events:none}.slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;padding:9px;background:#faf4e9}.slot{position:relative;aspect-ratio:1;border:2px dashed #c8b6a1;border-radius:10px;overflow:hidden;background:white;display:grid;place-items:center}.slot img{height:100%;width:100%;object-fit:cover}.slot .num{position:absolute;left:3px;top:3px;border-radius:5px;background:#2a2727a8;color:white;padding:1px 5px;font-size:11px}.slot .mark{position:absolute;right:3px;bottom:2px;background:#fff9;padding:1px 4px;border-radius:4px}.slot.locked{border:3px solid #31845a}.slot.wrong{border:3px solid #d44849}.empty:after{content:"待收集";color:#a99a85;font-size:12px}.stats{display:flex;justify-content:space-between;gap:8px;padding:10px;background:#fffaf3;font-size:13px;flex-wrap:wrap}.notice{margin-top:12px;background:#fffaf3;border:1px solid #ddcbb6;padding:12px;border-radius:12px;min-height:48px;font-size:14px}.dialogBg{position:fixed;inset:0;background:#152a3bbc;z-index:50;display:none;align-items:center;justify-content:center;padding:14px}.dialogBg.open{display:flex}.dialog{background:#fffaf2;padding:22px;border-radius:16px;max-width:490px;width:100%;text-align:center}.dialog .btn{margin:5px}@media(max-width:550px){.shell{padding:6px}.arena{height:clamp(320px,60vh,450px)}.jump{font-size:clamp(13px,3.25vw,17px);padding:12px 8px}.slots{gap:4px;padding:5px}.empty:after{font-size:10px}.hud{font-size:12px;padding:8px}}
+
+body.embedded{background:transparent}
+.embedded .shell{max-width:100%;padding:2px}
+.embedded header,.embedded .actions:has(#start),.embedded .actions:has(#chapter){display:none}
+.embedded .game{box-shadow:none}
+.embedded .arena{height:clamp(300px,46vw,440px)}
+@media(max-width:550px){
+  .embedded .arena{height:clamp(205px,30vh,265px)}
+  .embedded .ruleBanner{padding:7px 6px;font-size:clamp(14px,3.6vw,17px);line-height:1.25}
+  .embedded .ruleBanner .count{font-size:12px;margin-top:2px}
+  .embedded .slots{gap:3px;padding:5px}
+  .embedded .hud{padding:6px 7px}
+  .embedded .stats{padding:7px}
+}
+</style></head><body><main class="shell"><header><h1>⚔️ 古文斬錯字</h1><div class="sub">說文解圖・《囊螢夜讀》正式章節挑戰</div><p class="sub">正確句子讓它自然落下；看到形近字、音近字錯誤，就用手指或滑鼠「劃過」斬掉。</p></header>
+<div class="actions"><button id="start" class="btn primary">開始挑戰</button><button id="chapter" class="btn">切換章節：第一章</button><button id="reset" class="btn">重新開始</button><button id="sound" class="btn">音效：開</button></div>
+<section class="game"><div class="hud"><span id="chapterLabel">第一章・第1輪</span><span id="collected">收集 0 / 4</span><span id="score">得分 0</span></div><div class="ruleBanner" id="ruleBanner"><span class="ruleLine">✅ 正確句：讓它自然落下</span><span class="ruleLine">⚔️ 錯字句：滑動斬除</span><span class="count" id="ruleCount"></span></div><div class="arena" id="arena"><div id="help" class="help">按「開始挑戰」<br>劃過錯字句，放過完全正確的句子</div><canvas id="canvas"></canvas><div class="floatmsg" id="floatmsg"></div></div><div class="slots" id="slots"></div><div class="stats"><span id="roundInfo">第1次判定</span><span id="mistakes">誤斬0次</span><span id="slashed">成功斬錯0次</span></div></section>
+<div class="actions"><button id="hint" class="btn" hidden>💡 幫我完成一句（0分）</button></div><div class="notice" id="notice">本章四句，一次最多跳出兩句。四格填滿後統一判定：正確保留、錯誤清除。</div></main>
+<div class="dialogBg" id="overlay"><div class="dialog"><h2 id="dialogTitle"></h2><p id="dialogMessage"></p><div id="dialogActions"></div></div></div>
+<script>
+'use strict';
+const EMBEDDED=new URLSearchParams(location.search).get('embedded')==='1';
+const RUN=Number(new URLSearchParams(location.search).get('run'))||0;
+
+const DATA=[{"id":1,"text":"胤恭勤不倦，博學多通。","src":"images/scene_01.webp","swaps":[["胤","孕"],["倦","卷"],["博","搏"]]},{"id":2,"text":"家貧不常得油，","src":"images/scene_02.webp","swaps":[["貧","頻"],["常","長"],["油","由"]]},{"id":3,"text":"夏月則練囊盛數十螢火以照書，","src":"images/scene_03.webp","swaps":[["練","鍊"],["囊","嚢"],["螢","營"],["照","昭"]]},{"id":4,"text":"以夜繼日焉。","src":"images/scene_04.webp","swaps":[["繼","續"],["夜","液"],["焉","蔫"]]}];
+const GROUPS=[DATA],$=id=>document.getElementById(id),arena=$('arena'),canvas=$('canvas'),ctx=canvas.getContext('2d');
+let chapter=0,round=1,score=0,mis=0,slashN=0,slashBonus=0,slots=Array(4).fill(null),actors=[],playing=false,paused=false,grading=false,spawnClock=0,last=0,sound=true,audio=null;
+let helpN=0, introTimer=null, introToken=0;
+let pointer=null,trail=[],particles=[],floatUntil=0;
+const rnd=(a,b)=>a+Math.random()*(b-a),pick=arr=>arr[Math.floor(Math.random()*arr.length)];
+function chirp(f=560,len=.08,type='sine'){if(!sound)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.1,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+len);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+len)}catch(e){}}
+function flash(s,ms=900){$('floatmsg').textContent=s;floatUntil=performance.now()+ms}
+function note(s){$('notice').textContent=s}
+function render(){
+ $('chapterLabel').textContent=`第${chapter+1}章・第${round}輪`;$('collected').textContent=`收集 ${slots.filter(Boolean).length} / 4`;$('score').textContent=`得分 ${score}`;
+ $('roundInfo').textContent=`第${round}次判定`;$('mistakes').textContent=`誤斬${mis}次`;$('slashed').textContent=`成功斬錯${slashN}次`;
+ $('chapter').textContent=`切換章節：第${chapter+1}章`;$('hint').hidden=!(playing&&round>=3&&slots.some(x=>!x?.locked));
+ let root=$('slots');root.replaceChildren();GROUPS[chapter].forEach((s,i)=>{let v=slots[i],d=document.createElement('div');d.className=`slot ${v?v.locked?'locked':'filled':'empty'}`;let n=document.createElement('span');n.className='num';n.textContent=i+1;d.append(n);if(v){let im=document.createElement('img');im.src=s.src;im.alt=s.text;d.append(im);let mark=document.createElement('span');mark.className='mark';mark.textContent=v.locked?'✓':'…';d.append(mark);d.title=v.text}root.append(d)})
+}
+function resize(){let d=window.devicePixelRatio||1;canvas.width=arena.clientWidth*d;canvas.height=arena.clientHeight*d;ctx.setTransform(d,0,0,d,0,0)}addEventListener('resize',resize);
+function wrongVersion(item){let sw=item.swaps.slice().sort(()=>Math.random()-.5).slice(0,Math.random()<.23?2:1),s=item.text;for(let [a,b] of sw)s=s.replace(a,b);return s}
+function spawn(){if(actors.length>=2||!playing)return;let avail=GROUPS[chapter].filter((s,i)=>!slots[i]&&!actors.some(a=>a.item.id===s.id));if(!avail.length)return;
+ let item=pick(avail),wrong=Math.random()<.53,text=wrong?wrongVersion(item):item.text,el=document.createElement('div');el.className='jump';el.textContent=text;arena.append(el);
+ let w=arena.clientWidth,h=arena.clientHeight,ew=el.offsetWidth,eh=el.offsetHeight;
+ // 若句子長度大於螢幕，使用更小文字，確保完整顯示
+ if(ew>w-12){el.style.fontSize='12px';el.style.padding='10px 5px';ew=el.offsetWidth}
+ let a={item,wrong,text,el,w:ew,h:eh,x:rnd(4,Math.max(5,w-ew-4)),drift:rnd(-Math.min(50,w*.15),Math.min(50,w*.15)),peak:rnd(h*.32,h*.66),duration:rnd(3100,4300),birth:performance.now(),rect:null};actors.push(a)
+}
+function remove(a){a.el.remove();actors=actors.filter(x=>x!==a)}function clearActors(){actors.forEach(a=>a.el.remove());actors=[]}
+function drop(a){let idx=GROUPS[chapter].findIndex(s=>s.id===a.item.id);if(idx<0){remove(a);return}if(!slots[idx])slots[idx]={text:a.text,correct:!a.wrong,locked:false};remove(a);chirp(a.wrong?255:510);render();if(slots.every(Boolean)){playing=false;grading=true;clearActors();setTimeout(grade,900)}}
+function burst(x,y){for(let i=0;i<15;i++)particles.push({x,y,vx:rnd(-170,170),vy:rnd(-150,100),life:rnd(.25,.65)})}
+function slash(a){if(!playing||!a.rect)return;burst(a.rect.x+a.rect.w/2,a.rect.y+a.rect.h/2);remove(a);if(a.wrong){slashN++;if(slashBonus<50){score+=10;slashBonus+=10}flash('斬中錯字！ +10');chirp(780,.09,'triangle')}else{mis++;score-=10;flash('誤斬正確句！ −10',1100);chirp(180,.15,'sawtooth')}render()}
+function hit(x1,y1,x2,y2,r){let left=r.x-7,right=r.x+r.w+7,top=r.y-7,bottom=r.y+r.h+7,dx=x2-x1,dy=y2-y1,a=0,b=1;for(let [p,q] of [[-dx,x1-left],[dx,right-x1],[-dy,y1-top],[dy,bottom-y1]]){if(!p){if(q<0)return false}else{let t=q/p;if(p<0)a=Math.max(a,t);else b=Math.min(b,t);if(a>b)return false}}return true}
+function pos(e){let r=arena.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
+arena.addEventListener('pointerdown',e=>{if(!playing||paused)return;e.preventDefault();arena.setPointerCapture(e.pointerId);let p=pos(e);pointer={id:e.pointerId,prev:p,distance:0};trail=[p]});
+arena.addEventListener('pointermove',e=>{if(!pointer||e.pointerId!==pointer.id)return;e.preventDefault();let p=pos(e),q=pointer.prev;pointer.distance+=Math.hypot(p.x-q.x,p.y-q.y);pointer.prev=p;trail.push(p);if(trail.length>16)trail.shift();if(pointer.distance<16)return;actors.filter(a=>a.rect&&hit(q.x,q.y,p.x,p.y,a.rect)).forEach(slash)});
+function end(e){if(pointer?.id===e.pointerId){pointer=null;trail=[]}}arena.addEventListener('pointerup',end);arena.addEventListener('pointercancel',end);
+function frame(t){let dt=Math.min(40,t-(last||t));last=t;ctx.clearRect(0,0,arena.clientWidth,arena.clientHeight);
+ if(playing&&!paused){spawnClock+=dt;if(spawnClock>780&&actors.length<2){spawnClock=0;spawn()};for(let a of [...actors]){let f=(t-a.birth)/a.duration,y=arena.clientHeight-a.h-3-4*a.peak*f*(1-f),x=Math.max(2,Math.min(arena.clientWidth-a.w-2,a.x+a.drift*f));a.el.style.transform=`translate3d(${x}px,${y}px,0)`;a.rect={x,y,w:a.w,h:a.h};if(f>=1){drop(a);if(!playing)break}}}
+ if(trail.length>1){ctx.beginPath();ctx.moveTo(trail[0].x,trail[0].y);trail.slice(1).forEach(p=>ctx.lineTo(p.x,p.y));ctx.strokeStyle='#ffedbc';ctx.lineWidth=5;ctx.lineCap='round';ctx.shadowColor='#ffd38a';ctx.shadowBlur=12;ctx.stroke();ctx.shadowBlur=0}
+ particles=particles.filter(p=>p.life>0);for(let p of particles){p.life-=dt/1000;p.x+=p.vx*dt/1000;p.y+=p.vy*dt/1000;ctx.fillStyle=`rgba(255,222,165,${Math.max(0,p.life)})`;ctx.fillRect(p.x,p.y,5,5)}if(floatUntil<t)$('floatmsg').textContent='';requestAnimationFrame(frame)}
+function dialog(title,text,buttons){$('dialogTitle').textContent=title;$('dialogMessage').textContent=text;let root=$('dialogActions');root.replaceChildren();for(let [label,fn] of buttons){let b=document.createElement('button');b.className='btn primary';b.textContent=label;b.onclick=()=>{hideDialog();fn()};root.append(b)}$('overlay').classList.add('open');paused=true}
+function hideDialog(){$('overlay').classList.remove('open');paused=false}
+function finish(auto=false){
+ if(EMBEDDED){
+   playing=false;grading=false;clearActors();render();
+   note('🎉 本章斬錯字完成，返回漫畫回顧……');
+   window.parent.postMessage({type:'shuowen-slash-complete',chapter,run:RUN,rawScore:score,perfect:round===1&&!auto&&helpN===0&&mis===0,mistakes:mis,hints:helpN,round,auto},location.origin==='null'?'*':location.origin);
+   return;
+ }
+ playing=false;clearActors();render();note(`${auto?'第五次仍未全對，系統已補齊剩餘句子。':'本章四句全數正確！'} 目前得分 ${score}`);dialog(auto?'系統協助完成':`第${chapter+1}章完成！`,`本章已完成，累積得分 ${score} 分。`,[['重新挑戰',()=>startGame(true)]])}
+function grade(){if(!grading)return;grading=false;let wrong=[],newCorrect=0;slots.forEach((s,i)=>{if(s.locked)return;if(s.correct){s.locked=true;score+=round===1?50:round===2?25:10;newCorrect++}else wrong.push(i)});render();if(!wrong.length){finish();return}if(round===5){let n=0;slots.forEach((s,i)=>{if(!s.locked){slots[i]={text:GROUPS[chapter][i].text,correct:true,locked:true};n++}});finish(true);return}
+ for(let i of wrong){let d=$('slots').children[i];if(d)d.classList.add('wrong')};setTimeout(()=>{for(let i of wrong)slots[i]=null;round++;spawnClock=800;playing=true;render();note(`新鎖定${newCorrect}句；${wrong.length}句含錯字，已清空。請繼續第${round}輪。${round>=3?'現在可用「幫我完成一句」。':''}`)},950)}
+function startGame(resetScore=true){
+ // 每次新章或重新開始皆先閱讀3秒；期間不產生句子也不能斬擊。
+ const token=++introToken;
+ if(introTimer!==null){clearInterval(introTimer);introTimer=null}
+ helpN=0;clearActors();hideDialog();if(resetScore){score=0;mis=0;slashN=0}
+ slashBonus=0;slots=Array(4).fill(null);round=1;grading=false;playing=false;paused=false;spawnClock=0;
+ pointer=null;trail=[];
+ $('ruleBanner').classList.add('reading');
+ $('ruleCount').textContent='請先看清規則・3秒後開始';
+ $('help').style.display='block';$('help').textContent='準備開始：3';
+ note('⚔️ 正確句自然落下；錯字句請用手指或滑鼠滑動斬除。');render();
+ let remaining=3;
+ introTimer=setInterval(()=>{
+   if(token!==introToken){clearInterval(introTimer);return}
+   if(document.hidden)return;
+   remaining--;
+   if(remaining>0){$('ruleCount').textContent=`請先看清規則・${remaining}秒後開始`;$('help').textContent=`準備開始：${remaining}`;return}
+   clearInterval(introTimer);introTimer=null;
+   $('ruleBanner').classList.remove('reading');$('ruleCount').textContent='';
+   $('help').style.display='none';
+   playing=true;spawnClock=800;render();chirp(520,.1);
+ },1000);
+}
+$('start').onclick=()=>startGame(true);$('reset').onclick=()=>startGame(true);$('chapter').onclick=()=>{if(!EMBEDDED)startGame(true)};$('sound').onclick=()=>{sound=!sound;$('sound').textContent=`音效：${sound?'開':'關'}`} ;
+$('hint').onclick=()=>{if(!playing||round<3)return;helpN++;let i=slots.findIndex(x=>!x?.locked);if(i<0)return;let item=GROUPS[chapter][i];slots[i]={text:item.text,correct:true,locked:true};actors.filter(a=>a.item.id===item.id).forEach(remove);flash('自動完成一句（0分）',1200);render();if(slots.every(Boolean)){playing=false;grading=true;clearActors();setTimeout(grade,650)}};
+document.addEventListener('visibilitychange',()=>{if(document.hidden){paused=true;pointer=null;trail=[]}else{paused=$('overlay').classList.contains('open');let now=performance.now();actors.forEach(a=>a.birth=now)}});
+if(EMBEDDED){document.body.classList.add('embedded');$('chapter').hidden=true;}
+render();resize();requestAnimationFrame(frame);
+if(EMBEDDED){startGame(true)}
+</script></body></html>
